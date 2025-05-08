@@ -4,7 +4,5 @@ metadata:
   name: nginx-static
   namespace: {{ .Values.namespace }}
 data:
-  index.html: |
-{{ .Files.Get "static/index.html" | indent 4 }}
   nginx.conf: |
 {{ .Files.Get "static/nginx.conf" | indent 4 }}

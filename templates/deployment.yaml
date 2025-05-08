@@ -13,6 +13,17 @@ spec:
       labels:
         app: nginx-static
     spec:
+      initContainers:
+        - name: init-copy-html
+          image: alpine
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              mkdir -p /mnt/html &&
+              echo {{ .Files.Get "static/index.html" | quote }} > /mnt/html/index.html
+          volumeMounts:
+            - name: html
+              mountPath: /mnt/html
       containers:
         - name: nginx
           image: nginx:alpine
@@ -24,8 +35,8 @@ spec:
               subPath: nginx.conf
       volumes:
         - name: html
-          configMap:
-            name: nginx-static
+          persistentVolumeClaim:
+            claimName: nginx-html
         - name: nginx-conf
           configMap:
             name: nginx-static
