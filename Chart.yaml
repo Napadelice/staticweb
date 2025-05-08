@@ -1,0 +1,5 @@
+apiVersion: v2
+name: nginx-static
+version: 0.1.0
+description: Simple static site using Nginx and ConfigMap
+namespace: "{{ .Values.namespace }}"
